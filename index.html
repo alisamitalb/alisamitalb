@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media Qurain App - النسخة التجريبية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* الأساس */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            /* Deeper, richer background gradient for a more professional feel */
+            background: linear-gradient(135deg, #1a0a33, #2c1a50, #402a70);
+            color: #E0E0E0; /* Soft off-white for general text - improved readability */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            direction: rtl;
+            line-height: 1.7; /* Improved readability with more line height */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* شريط النسخة */
+        .version-banner {
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 165, 0, 0.8); /* Softer orange */
+            color: #333; /* Darker text for better contrast */
+            padding: 12px; /* Slightly more padding */
+            font-weight: 600; /* Medium bold */
+            font-size: 1.15rem;
+            backdrop-filter: blur(8px); /* Increased blur for more depth */
+            -webkit-backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100; /* Higher z-index */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* More prominent shadow */
+        }
+
+        /* الحاوية الزجاجية */
+        .glass-container {
+            /* More subtle, slightly tinted glass background */
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px) saturate(180%); /* Stronger blur and saturation for liquid effect */
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15); /* More visible, elegant border */
+            border-radius: 25px; /* More rounded */
+            padding: 50px; /* More padding */
+            max-width: 950px; /* Wider container */
+            width: 90%;
+            margin: 50px auto; /* Increased margin */
+            /* Enhanced shadow for depth and floating effect */
+            box-shadow: 0 15px 60px 0 rgba(0,0,0,0.5);
+            animation: fadeInMove 1.8s ease forwards; /* Slower, smoother animation */
+            position: relative; /* For overflow handling */
+            overflow: hidden; /* Ensure content stays within bounds */
+        }
+
+        /* النصوص */
+        h1, h2 {
+            /* Vibrant, professional aqua/cyan for headings */
+            color: #7DEEF1; /* New heading color */
+            margin-bottom: 20px; /* More space */
+            font-weight: 700;
+            /* More pronounced, glowing text shadow matching new heading color */
+            text-shadow: 0 0 15px rgba(125,238,241,0.6);
+        }
+
+        h1 {
+            font-size: 3.2rem; /* Even larger main title */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.5rem; /* Larger section titles */
+            /* More distinct, glowing border matching new heading color */
+            border-bottom: 2px solid rgba(125,238,241,0.4);
+            padding-bottom: 12px;
+            margin-top: 50px; /* More space above sections */
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.2rem; /* Slightly larger paragraph text */
+            color: #E0E0E0; /* Consistent with body text for readability */
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .features {
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.02); /* Very subtle background for features section */
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+            display: grid; /* Use grid for better layout */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+            gap: 20px; /* Space between grid items */
+        }
+
+        .features-list li {
+            padding: 18px 25px; /* More padding */
+            font-size: 1.15rem;
+            background: rgba(255, 255, 255, 0.05); /* Individual glass-like feature cards */
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Space between icon and text */
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); /* Shadow for feature cards */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #E0E0E0; /* Consistent text color */
+        }
+
+        .features-list li:hover {
+            transform: translateY(-8px) scale(1.02); /* More pronounced lift and slight zoom */
+            background: rgba(255, 255, 255, 0.08); /* Lighter on hover */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Stronger shadow on hover */
+            color: #A0EEF1; /* Slightly brighter highlight on hover for features */
+        }
+
+        .features-list li i {
+            /* Brighter, more vibrant icon color */
+            color: #00F0FF; /* New vibrant icon color */
+            font-size: 1.6rem; /* Larger icons */
+            min-width: 30px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0,240,255,0.7); /* Glowing icon effect matching new color */
+        }
+
+        /* الأزرار */
+        .download {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .download .btn {
+            /* More sophisticated gradient for buttons */
+            background: linear-gradient(45deg, #00bfff, #007bff); /* Blue tones */
+            color: white; /* Keep white for strong contrast */
+            padding: 18px 40px; /* Larger padding for prominent buttons */
+            margin: 15px;
+            border-radius: 12px; /* More rounded */
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-size: 1.2rem; /* Larger font */
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0,191,255,0.4); /* Stronger button shadow */
+            border: none;
+            position: relative;
+            overflow: hidden; /* For ripple effect */
+        }
+
+        .download .btn:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+        }
+
+        .download .btn:hover {
+            background: linear-gradient(45deg, #007bff, #00bfff); /* Invert gradient on hover */
+            transform: translateY(-5px); /* More pronounced lift */
+            box-shadow: 0 12px 35px rgba(0,191,255,0.6); /* Even stronger shadow */
+        }
+
+        .download .btn:hover:before {
+            width: 200%;
+            height: 200%;
+            opacity: 1;
+        }
+
+        .download .btn i {
+            margin-right: 10px; /* Space between icon and text */
+            font-size: 1.3rem;
+        }
+
+        /* صور التطبيق */
+        .preview {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px; /* More space between images */
+            margin-top: 45px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.01); /* Even more subtle background for gallery */
+            border-radius: 20px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+        }
+
+        .preview img {
+            width: 250px; /* Larger images */
+            height: 180px; /* Fixed height for consistency */
+            border-radius: 15px; /* More rounded */
+            box-shadow: 0 8px 30px rgba(0,0,0,0.7); /* Stronger, deeper shadow */
+            object-fit: cover;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            border: 3px solid rgba(125,238,241,0.3); /* More prominent, glowing border matching heading color */
+        }
+
+        .preview img:hover {
+            transform: scale(1.08) rotate(1deg); /* More dynamic zoom and slight rotation */
+            box-shadow: 0 15px 45px rgba(0,0,0,0.9); /* Darker, more spread shadow */
+            border-color: #7DEEF1; /* Highlight border on hover matching heading color */
+        }
+
+        /* تذييل */
+        footer {
+            margin-top: 60px; /* More margin */
+            margin-bottom: 40px;
+            font-size: 1em;
+            color: #A0A0A0; /* Softer grey for footer text */
+            text-align: center;
+            width: 100%;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.08); /* Slightly more visible separator */
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #E0E0E0; /* Consistent with body text for icons */
+            font-size: 1.8rem; /* Larger icons */
+            margin: 0 15px; /* More space between icons */
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3); /* Subtle glow */
+        }
+
+        .social-links a:hover {
+            color: #7DEEF1; /* Glowing highlight on hover matching heading color */
+            transform: translateY(-3px) scale(1.1); /* Lift and slight zoom */
+        }
+
+        /* الأنيميشن */
+        @keyframes fadeInMove {
+            0% {
+                opacity: 0;
+                transform: translateY(50px); /* Start further down */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .glass-container {
+                padding: 40px;
+                max-width: 95%;
+            }
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2.2rem; }
+            p { font-size: 1.1rem; }
+            .features-list li { font-size: 1.05rem; padding: 15px 20px; }
+            .features-list li i { font-size: 1.4rem; }
+            .download .btn { padding: 15px 30px; font-size: 1.1rem; }
+            .preview img { width: 200px; height: 150px; }
+        }
+
+        @media (max-width: 768px) {
+            .glass-container {
+                padding: 30px;
+                margin: 30px auto;
+            }
+            h1 { font-size: 2.4rem; }
+            h2 { font-size: 2rem; }
+            p { font-size: 1rem; }
+            .features-list { grid-template-columns: 1fr; } /* Stack features on smaller screens */
+            .features-list li { font-size: 1rem; padding: 12px 18px; }
+            .features-list li i { font-size: 1.2rem; }
+            .download .btn { padding: 12px 25px; margin: 10px; font-size: 1rem; }
+            .preview img { width: 160px; height: 120px; gap: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .glass-container {
+                padding: 20px;
+            }
+            h1 { font-size: 2rem; margin-bottom: 20px; }
+            h2 { font-size: 1.8rem; margin-top: 30px; }
+            p { font-size: 0.95rem; }
+            .version-banner { font-size: 1rem; padding: 8px; }
+            .features-list li { font-size: 0.95rem; gap: 10px; padding: 10px 15px; }
+            .features-list li i { font-size: 1.1rem; }
+            .download .btn {
+                display: block;
+                width: calc(100% - 40px); /* Full width minus padding */
+                margin: 10px auto;
+            }
+            .preview { gap: 15px; padding: 10px; }
+            .preview img { width: 120px; height: 90px; }
+            footer { font-size: 0.85em; margin-top: 40px; }
+            .social-links a { font-size: 1.6rem; margin: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط تنبيه النسخة -->
+    <div class="version-banner">🚧 هذه نسخة تجريبية أولية من التطبيق</div>
+
+    <!-- الحاوية الزجاجية -->
+    <div class="glass-container fade-in">
+        <header>
+            <h1>📱 تطبيق Qurain</h1>
+            <p>
+                ارتقِ بتصميم المحتوى القرآني إلى مستوى جديد من الإبداع والاحترافية.
+                يتيح لك تطبيق Qurain دمج الفيديو، الصوت، والصور بأسلوب سلس ومبتكر لنشر رسالة القرآن الكريم بجمالية فائقة.
+            </p>
+        </header>
+
+        <!-- قسم المميزات -->
+        <section class="features">
+            <h2>✨ مميزات التطبيق</h2>
+            <ul class="features-list">
+                <li><i class="fas fa-video"></i> تعديل الفيديوهات بإضافة الآيات والتفسير بلمسة احترافية</li>
+                <li><i class="fas fa-image"></i> تصميم صور قرآنية متعددة أو آية واحدة بتأثيرات بصرية خلابة</li>
+                <li><i class="fas fa-volume-up"></i> إنشاء صوتيات قرآنية بصوت القارئ المفضل لديك بجودة عالية</li>
+                <li><i class="fas fa-microphone-alt"></i> تسجيل ودمج صوتك مع الآيات في فيديو لإنشاء محتوى فريد</li>
+                <li><i class="fas fa-film"></i> إنتاج فيديو قرآني كامل بصوت القارئ مع خيارات تخصيص متقدمة</li>
+                <li><i class="fas fa-broadcast-tower"></i> الاستماع إلى إذاعة قرآنية وقراء مختلفين في أي وقت ومكان</li>
+            </ul>
+        </section>
+
+        <!-- روابط التحميل -->
+     <!-- أزرار التحميل -->
+<section class="download">
+    <h2>⬇️ روابط التحميل</h2>
+    <p>
+        لا تفوّت فرصة تجربة تطبيق Qurain! حمّله الآن وابدأ رحلتك في تصميم المحتوى القرآني الاحترافي.
+    </p>
+    <a href="https://drive.google.com/file/d/مثال_ID_الأندرويد/view" class="btn" target="_blank" rel="noopener">
+        <i class="fab fa-android"></i> تحميل للأندرويد
+    </a>
+    <a href="https://apps.apple.com/app/idمثال_AppleID" class="btn" target="_blank" rel="noopener">
+        <i class="fab fa-apple"></i> تحميل للآيفون
+    </a>
+</section>
+
+
+        <!-- صور من التطبيق -->
+        <section class="preview">
+            <h2>📷 لقطات من التطبيق</h2>
+            <img src="https://placehold.co/250x180/1a0a33/7DEEF1?text=الشاشة+الرئيسية" alt="صورة من التطبيق 1" />
+            <img src="https://placehold.co/250x180/2c1a50/7DEEF1?text=تحرير+الفيديو" alt="صورة من التطبيق 2" />
+            <img src="https://placehold.co/250x180/402a70/7DEEF1?text=تصميم+الصور" alt="صورة من التطبيق 3" />
+            <img src="https://placehold.co/250x180/1a0a33/7DEEF1?text=إذاعة+القرآن" alt="صورة من التطبيق 4" />
+            <img src="https://placehold.co/250x180/2c1a50/7DEEF1?text=تسجيل+الصوت" alt="صورة من التطبيق 5" />
+            <img src="https://placehold.co/250x180/402a70/7DEEF1?text=المكتبة+القرآنية" alt="صورة من التطبيق 6" />
+        </section>
+
+        <!-- تذييل -->
+        <footer>
+            <p>&copy; 2025 Qurain App - جميع الحقوق محفوظة.</p>
+            <div class="social-links">
+                <a href="#" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="إنستغرام"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
+                <a href="#" aria-label="تيليجرام"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
