@@ -1,2 +1,2 @@
 # alisamitalb
-link https://alisamitalb.vercel.app/#download
+link https://alisamitalb.vercel.app/
